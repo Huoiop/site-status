@@ -28,6 +28,6 @@ jobs:
         run: pnpm install
 
       - name: Build & Deploy to NuxtHub
-        uses: nuxt-hub/action@v2
-        with:
-          project-key: site-status-2-0-i0fr
+        run: |
+          pnpm build
+          pnpm start
