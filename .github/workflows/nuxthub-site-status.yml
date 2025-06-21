@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-- name: Build & Deploy to NuxtHub
-  run: |
-    pnpm build
-    pnpm start
+      - name: Build & Deploy to NuxtHub
+        run: |
+          pnpm build
+          pnpm start
