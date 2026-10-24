@@ -10,7 +10,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "node ./tools/build-edgeone.mjs",
+    "build": "node ./tools/build.mjs",
     "build:nuxt": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
