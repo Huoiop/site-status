@@ -57,7 +57,7 @@ This project is deployed by default using [Cloudflare Pages](https://pages.cloud
 
 ### Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/imsyy/site-status)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Huoiop/site-status)
 
 - Click the button above to deploy.
 - Add the following environment variables (important):

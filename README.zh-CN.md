@@ -56,7 +56,7 @@
 
 ### Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/imsyy/site-status)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Huoiop/site-status)
 
 - 点击上方按钮以前往部署
 - 在环境变量中添加下方的内容（ 重要 ）
