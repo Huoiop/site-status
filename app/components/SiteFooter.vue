@@ -32,16 +32,19 @@
       </n-p>
       <n-p depth="3">
         Copyright &copy; 2020 - {{ new Date().getFullYear() }}
-        <n-text depth="3" @click="jumpLink(linkData.home)">
-          {{ siteAuthor }}
-        </n-text>
-        <n-text
-          v-if="siteIcp"
-          depth="3"
-          @click="jumpLink('https://beian.miit.gov.cn/')"
-        >
-          | {{ siteIcp }}
-        </n-text>
+        <n-text depth="3" @click="jumpLink(imsyyUrl)"> IMSYY </n-text>
+        <template v-if="siteAuthor">
+          <span> &amp; </span>
+          <n-text depth="3" @click="jumpLink(linkData.github)">
+            {{ siteAuthor }}
+          </n-text>
+        </template>
+        <template v-if="siteIcp">
+          <span> | </span>
+          <n-text depth="3" @click="jumpLink('https://beian.miit.gov.cn/')">
+            {{ siteIcp }}
+          </n-text>
+        </template>
       </n-p>
     </n-flex>
   </footer>
@@ -51,6 +54,8 @@
 const { public: configPublic } = useRuntimeConfig();
 const { siteIcp, version, siteGithub, siteHome, siteEmail, siteAuthor } =
   configPublic;
+
+const imsyyUrl = "https://github.com/imsyy/";
 
 const linkData = computed(() => ({
   github: siteGithub,

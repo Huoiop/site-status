@@ -6,6 +6,8 @@ export const useStatusStore = defineStore(
   () => {
     // 登录状态
     const loginStatus = ref<boolean>(false);
+    // 站点是否配置了访问密码
+    const passwordRequired = ref<boolean>(false);
     // 站点状态
     const siteStatus = ref<SiteType>("loading");
     // 站点数据
@@ -15,7 +17,14 @@ export const useStatusStore = defineStore(
     // 站点语言
     const siteLang = ref<SiteLangType>("zh-CN");
 
-    return { loginStatus, siteStatus, siteData, scrollTop, siteLang };
+    return {
+      loginStatus,
+      passwordRequired,
+      siteStatus,
+      siteData,
+      scrollTop,
+      siteLang,
+    };
   },
   {
     persist: {

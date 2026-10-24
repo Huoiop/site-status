@@ -60,6 +60,7 @@ const toLogin = useDebounce(
       // 尝试登录
       const password = SHA256(formData.value.password).toString();
       await $fetch("/api/verify", { method: "POST", body: { password } });
+      statusStore.passwordRequired = true;
       statusStore.loginStatus = true;
       window.$message.success(t("login.success"));
     } catch (error) {

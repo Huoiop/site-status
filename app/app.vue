@@ -42,6 +42,8 @@ const siteLoaded = ref<boolean>(false);
 const checkSite = async () => {
   try {
     const result = await $fetch("/api/check", { method: "POST" });
+    // 站点是否启用了密码
+    statusStore.passwordRequired = result.passwordRequired ?? false;
     // 更改登录状态
     statusStore.loginStatus = result.code === 200;
   } catch (error) {

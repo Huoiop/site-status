@@ -26,7 +26,7 @@ const siteConfig = {
     process.env.SITE_GITHUB ?? "https://github.com/imsyy/site-status",
   siteHome: process.env.SITE_HOME ?? "https://www.imsyy.top",
   siteEmail: process.env.SITE_EMAIL ?? "one@imsyy.top",
-  siteAuthor: envText("SITE_AUTHOR", "IMSYY"),
+  siteAuthor: envText("SITE_AUTHOR", ""),
   countDays: Number(process.env.COUNT_DAYS || 60),
   showLink:
     showLinkEnv === undefined ? true : showLinkEnv.toLowerCase() === "true",
