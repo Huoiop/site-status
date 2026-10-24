@@ -5,13 +5,18 @@ import pkg from "./package.json";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
+// EdgeOne's environment variable input does not allow spaces.
+// Text values can use "+" as a space placeholder, e.g. SITE_TITLE="Huoiop+NET+站点监测".
+const envText = (key: string, fallback: string) =>
+  (process.env[key] ?? fallback).replace(/\+/g, " ");
+
 // site env
 const siteConfig = {
-  siteTitle: process.env.SITE_TITLE || "IMSYY 站点监测",
-  siteDescription: process.env.SITE_DESCRIPTION || "一个简约的站点监测",
-  siteKeywords: process.env.SITE_KEYWORDS || "站点监测,监测,监控",
+  siteTitle: envText("SITE_TITLE", "IMSYY 站点监测"),
+  siteDescription: envText("SITE_DESCRIPTION", "一个简约的站点监测"),
+  siteKeywords: envText("SITE_KEYWORDS", "站点监测,监测,监控"),
   siteLogo: process.env.SITE_LOGO || "/favicon.ico",
-  siteIcp: process.env.SITE_ICP || "",
+  siteIcp: envText("SITE_ICP", ""),
   countDays: Number(process.env.COUNT_DAYS || 60),
   showLink: process.env.SHOW_LINK === "true" || true,
   platform: process.env.DEPLOYMENT_PLATFORM || "cloudflare",
