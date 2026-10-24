@@ -1,8 +1,10 @@
 /**
  * Jump to a link.
- * @param url The link to jump to.
+ * @param url The link to jump to. Empty values are ignored.
  */
-export const jumpLink = (url: string) => window.open(url, "_blank");
+export const jumpLink = (url?: string) => {
+  if (url) window.open(url, "_blank");
+};
 
 /**
  * Format a number.

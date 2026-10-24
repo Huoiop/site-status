@@ -2,15 +2,15 @@
   <footer id="footer">
     <n-flex class="link" align="center">
       <n-button
-        v-for="(item, key, index) in linkData"
-        :key="index"
+        v-for="item in footerLinks"
+        :key="item.key"
         :focusable="false"
         quaternary
         circle
-        @click="jumpLink(item)"
+        @click="jumpLink(item.url)"
       >
         <template #icon>
-          <Icon :name="`icon:${key}`" />
+          <Icon :name="`icon:${item.key}`" />
         </template>
       </n-button>
     </n-flex>
@@ -32,7 +32,9 @@
       </n-p>
       <n-p depth="3">
         Copyright &copy; 2020 - {{ new Date().getFullYear() }}
-        <n-text depth="3" @click="jumpLink(linkData.home)"> IMSYY </n-text>
+        <n-text depth="3" @click="jumpLink(linkData.home)">
+          {{ siteAuthor }}
+        </n-text>
         <n-text
           v-if="siteIcp"
           depth="3"
@@ -47,13 +49,25 @@
 
 <script setup lang="ts">
 const { public: configPublic } = useRuntimeConfig();
-const { siteIcp, version } = configPublic;
+const { siteIcp, version, siteGithub, siteHome, siteEmail, siteAuthor } =
+  configPublic;
 
-const linkData = {
-  github: "https://github.com/imsyy/site-status",
-  home: "https://www.imsyy.top",
-  email: "mailto:one@imsyy.top",
-};
+const linkData = computed(() => ({
+  github: siteGithub,
+  home: siteHome,
+  email: siteEmail
+    ? siteEmail.includes(":")
+      ? siteEmail
+      : `mailto:${siteEmail}`
+    : "",
+}));
+
+// Hide buttons whose link is not configured.
+const footerLinks = computed(() =>
+  Object.entries(linkData.value)
+    .filter(([, url]) => Boolean(url))
+    .map(([key, url]) => ({ key, url })),
+);
 </script>
 
 <style lang="scss" scoped>

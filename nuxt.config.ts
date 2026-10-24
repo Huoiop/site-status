@@ -21,6 +21,12 @@ const siteConfig = {
   siteKeywords: envText("SITE_KEYWORDS", "站点监测,监测,监控"),
   siteLogo: process.env.SITE_LOGO || "/favicon.ico",
   siteIcp: envText("SITE_ICP", ""),
+  // Footer / nav links. Leave a value empty to hide the related button.
+  siteGithub:
+    process.env.SITE_GITHUB ?? "https://github.com/imsyy/site-status",
+  siteHome: process.env.SITE_HOME ?? "https://www.imsyy.top",
+  siteEmail: process.env.SITE_EMAIL ?? "one@imsyy.top",
+  siteAuthor: envText("SITE_AUTHOR", "IMSYY"),
   countDays: Number(process.env.COUNT_DAYS || 60),
   showLink:
     showLinkEnv === undefined ? true : showLinkEnv.toLowerCase() === "true",

@@ -70,6 +70,7 @@ const { t } = useI18n();
 const colorMode = useColorMode();
 const config = useRuntimeConfig();
 const statusStore = useStatusStore();
+const siteGithub = config.public.siteGithub;
 
 // 图标渲染
 const renderIcon = (icon: string) => () =>
@@ -80,9 +81,12 @@ const navMenu = computed<DropdownOption[]>(() => [
   {
     key: "github",
     label: "GitHub",
+    show: Boolean(siteGithub),
     icon: renderIcon("icon:github"),
     props: {
-      onClick: () => window.open("https://github.com/imsyy/site-status"),
+      onClick: () => {
+        if (siteGithub) window.open(siteGithub);
+      },
     },
   },
   {
