@@ -31,7 +31,9 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "nuxt-lodash",
     "@nuxtjs/i18n",
-  ].concat(siteConfig.platform === "cloudflare" ? "@nuxthub/core" : ""),
+    // keep this a plain array so EdgeOne's adapter can inject its module
+    ...(siteConfig.platform === "cloudflare" ? ["@nuxthub/core"] : []),
+  ],
   // ssr
   ssr: false,
   // devtools

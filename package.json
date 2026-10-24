@@ -10,7 +10,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
+    "build": "node ./tools/build-edgeone.mjs",
+    "build:nuxt": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -35,8 +36,17 @@
     "vue": "^3.5.13"
   },
   "devDependencies": {
+    "@babel/generator": "7.29.8",
+    "@babel/parser": "7.29.11",
+    "@babel/traverse": "7.29.10",
+    "@babel/types": "7.29.11",
+    "@edgeone/nuxt-pages": "1.1.2",
+    "@intlify/message-compiler": "11.4.16",
+    "@netlify/functions": "3.1.10",
     "@nuxt/eslint": "^0.7.5",
+    "@nuxt/kit": "3.15.2",
     "@nuxtjs/color-mode": "^3.5.2",
+    "@opentelemetry/api": "1.10.0",
     "@pinia/nuxt": "^0.9.0",
     "@types/crypto-js": "^4.2.2",
     "@types/node": "^22.10.7",
