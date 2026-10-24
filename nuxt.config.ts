@@ -10,6 +10,10 @@ import pkg from "./package.json";
 const envText = (key: string, fallback: string) =>
   (process.env[key] ?? fallback).replace(/\+/g, " ");
 
+// Prefer SHOW_LINKS (documented); keep SHOW_LINK as a legacy alias.
+// Unset defaults to true; only an explicit "true" enables links.
+const showLinkEnv = process.env.SHOW_LINKS ?? process.env.SHOW_LINK;
+
 // site env
 const siteConfig = {
   siteTitle: envText("SITE_TITLE", "IMSYY 站点监测"),
@@ -18,7 +22,8 @@ const siteConfig = {
   siteLogo: process.env.SITE_LOGO || "/favicon.ico",
   siteIcp: envText("SITE_ICP", ""),
   countDays: Number(process.env.COUNT_DAYS || 60),
-  showLink: process.env.SHOW_LINK === "true" || true,
+  showLink:
+    showLinkEnv === undefined ? true : showLinkEnv.toLowerCase() === "true",
   platform: process.env.DEPLOYMENT_PLATFORM || "cloudflare",
   version: pkg.version,
 };
