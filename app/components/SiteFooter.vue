@@ -35,7 +35,7 @@
         <n-text depth="3" @click="jumpLink(imsyyUrl)"> IMSYY </n-text>
         <template v-if="siteAuthor">
           <span> &amp; </span>
-          <n-text depth="3" @click="jumpLink(linkData.github)">
+          <n-text depth="3" @click="jumpLink(siteAuthorUrl)">
             {{ siteAuthor }}
           </n-text>
         </template>
@@ -52,8 +52,15 @@
 
 <script setup lang="ts">
 const { public: configPublic } = useRuntimeConfig();
-const { siteIcp, version, siteGithub, siteHome, siteEmail, siteAuthor } =
-  configPublic;
+const {
+  siteIcp,
+  version,
+  siteGithub,
+  siteHome,
+  siteEmail,
+  siteAuthor,
+  siteAuthorUrl,
+} = configPublic;
 
 const imsyyUrl = "https://github.com/imsyy/";
 

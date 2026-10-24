@@ -34,6 +34,17 @@
 
 ## 部署
 
+### 构建目标
+
+`DEPLOYMENT_PLATFORM` 决定构建产物：
+
+| 值 | 目标平台 | 产物 |
+| --- | --- | --- |
+| `cloudflare`（默认） | Cloudflare Pages（NuxtHub） | `dist/` |
+| `auto` | 通用 Node.js 服务器 | `.output/` |
+| `eo` | EdgeOne Makers | `.edgeone/` |
+| `esa` | 阿里云 ESA | `.output/server/index.mjs` + `.output/public/` |
+
 ### Cloudflare
 
 本项目默认使用 [Cloudflare Pages](https://pages.cloudflare.com/) 来行部署
@@ -57,6 +68,53 @@
 
 - 大功告成
 
+### EdgeOne Makers
+
+设置 `DEPLOYMENT_PLATFORM=eo`，构建时会运行 `@edgeone/nuxt-pages`，并输出 EdgeOne Build Output API 结构到 `.edgeone`。
+
+| 配置项 | 值 |
+| --- | --- |
+| 根目录 | `./` |
+| 安装命令 | `pnpm install` |
+| 构建命令 | `pnpm run build` |
+| 输出目录 | `.edgeone` |
+| Node.js 版本 | 22.x |
+
+在 EdgeOne 项目设置中配置 `DEPLOYMENT_PLATFORM=eo`、`API_KEY` 以及 `.env.example` 中的其他变量，然后部署即可。
+
+> EdgeOne 的环境变量值不能包含空格。文本类变量（`SITE_TITLE`、`SITE_DESCRIPTION`、`SITE_KEYWORDS`、`SITE_ICP`、`SITE_AUTHOR`）请用 `+` 代替空格，例如 `SITE_TITLE="Huoiop+NET+服务检测"`。
+
+### 阿里云 ESA
+
+设置 `DEPLOYMENT_PLATFORM=esa`，构建时使用 Nitro 的 `cloudflare-module` 预设，产出边缘 Worker。
+
+| 配置项 | 值 |
+| --- | --- |
+| 根目录 | `/` |
+| 安装命令 | `pnpm install` |
+| 构建命令 | `pnpm run build` |
+| 静态资源目录 | `.output/public` |
+| 函数文件路径 | `.output/server/index.mjs` |
+| Node.js 版本 | 22.x |
+
+在 ESA 项目设置中配置 `DEPLOYMENT_PLATFORM=esa`、`API_KEY` 以及 `.env.example` 中的其他变量。
+
+也可以在仓库根目录使用 `esa.jsonc`：
+
+```jsonc
+{
+  "name": "site-status",
+  "entry": "./.output/server/index.mjs",
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm run build",
+  "assets": {
+    "directory": ".output/public"
+  }
+}
+```
+
+> 存在 `esa.jsonc` 时，其配置优先于 ESA 控制台的构建配置。
+
 ### 其他托管平台
 
 请参考官方文档：[部署 Nuxt 应用](https://nuxtjs.org.cn/deploy)
@@ -66,6 +124,12 @@
 ### 如何开启站点加密
 
 在环境变量中添加 `SITE_PASSWORD` 和 `SITE_SECRE_KEY`，都必须填写，缺一不可，其中 `SITE_PASSWORD`是站点密码，`SITE_SECRE_KEY` 是加密密钥，可随意填写
+
+### 如何自定义页脚链接
+
+使用 `SITE_GITHUB`、`SITE_HOME`、`SITE_EMAIL`、`SITE_AUTHOR` 和 `SITE_AUTHOR_URL`，具体见 `.env.example`。
+
+版权栏始终显示 `IMSYY`（跳转到 `https://github.com/imsyy/`）；设置 `SITE_AUTHOR` 后会显示为 `IMSYY & <名称>`。`SITE_AUTHOR_URL` 默认从 `SITE_GITHUB` 推导 GitHub 主页，例如 `https://github.com/Huoiop/site-status` 会跳转到 `https://github.com/Huoiop/`。
 
 ## 鸣谢
 

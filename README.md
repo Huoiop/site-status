@@ -35,6 +35,17 @@ English | [简体中文](./README.zh-CN.md)
 
 ## Deployment
 
+### Build targets
+
+`DEPLOYMENT_PLATFORM` controls the build output:
+
+| Value | Target | Output |
+| --- | --- | --- |
+| `cloudflare` (default) | Cloudflare Pages via NuxtHub | `dist/` |
+| `auto` | Generic Node.js server | `.output/` |
+| `eo` | EdgeOne Makers | `.edgeone/` |
+| `esa` | Alibaba Cloud ESA | `.output/server/index.mjs` + `.output/public/` |
+
 ### Cloudflare
 
 This project is deployed by default using [Cloudflare Pages](https://pages.cloudflare.com/).
@@ -58,6 +69,53 @@ This project is deployed by default using [Cloudflare Pages](https://pages.cloud
 
 - All set!
 
+### EdgeOne Makers
+
+Set `DEPLOYMENT_PLATFORM=eo`. The build runs `@edgeone/nuxt-pages` and emits the EdgeOne Build Output API structure into `.edgeone`.
+
+| Setting | Value |
+| --- | --- |
+| Root directory | `./` |
+| Install command | `pnpm install` |
+| Build command | `pnpm run build` |
+| Output directory | `.edgeone` |
+| Node.js version | 22.x |
+
+Add `DEPLOYMENT_PLATFORM=eo`, `API_KEY` and the other variables from `.env.example` in the EdgeOne project settings, then deploy.
+
+> EdgeOne environment variable values cannot contain spaces. In text fields (`SITE_TITLE`, `SITE_DESCRIPTION`, `SITE_KEYWORDS`, `SITE_ICP`, `SITE_AUTHOR`), use `+` as a space placeholder, e.g. `SITE_TITLE="Huoiop+NET+Status"`.
+
+### Alibaba Cloud ESA
+
+Set `DEPLOYMENT_PLATFORM=esa`. The build uses Nitro's `cloudflare-module` preset and produces an edge Worker.
+
+| Setting | Value |
+| --- | --- |
+| Root directory | `/` |
+| Install command | `pnpm install` |
+| Build command | `pnpm run build` |
+| Static assets directory | `.output/public` |
+| Function file path | `.output/server/index.mjs` |
+| Node.js version | 22.x |
+
+Add `DEPLOYMENT_PLATFORM=esa`, `API_KEY` and the other variables from `.env.example` in the ESA project settings.
+
+You can also configure the same values with an `esa.jsonc` in the repository root:
+
+```jsonc
+{
+  "name": "site-status",
+  "entry": "./.output/server/index.mjs",
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm run build",
+  "assets": {
+    "directory": ".output/public"
+  }
+}
+```
+
+> When `esa.jsonc` exists, its settings take precedence over the ESA console build configuration.
+
 ### Other Hosting Platforms
 
 For deployment guides, refer to the official documentation: [Deploying Nuxt Apps](https://nuxtjs.org.cn/deploy)
@@ -66,7 +124,13 @@ For deployment guides, refer to the official documentation: [Deploying Nuxt Apps
 
 ### How to Enable Site Encryption
 
-Add the following environment variables: `SITE_PASSWORD` and `SITE_SECRET_KEY`. Both are required. The `SITE_PASSWORD` is the site password, and the `SITE_SECRET_KEY` is the encryption key, which you can choose freely.
+Add the following environment variables: `SITE_PASSWORD` and `SITE_SECRE_KEY`. Both are required. The `SITE_PASSWORD` is the site password, and the `SITE_SECRE_KEY` is the encryption key, which you can choose freely.
+
+### How to Customize Footer Links
+
+Use `SITE_GITHUB`, `SITE_HOME`, `SITE_EMAIL`, `SITE_AUTHOR` and `SITE_AUTHOR_URL`. See `.env.example` for details.
+
+The copyright line always shows `IMSYY` (linking to `https://github.com/imsyy/`). When `SITE_AUTHOR` is set, it is displayed as `IMSYY & <author>`. `SITE_AUTHOR_URL` defaults to the GitHub profile derived from `SITE_GITHUB`, so `https://github.com/Huoiop/site-status` links to `https://github.com/Huoiop/`.
 
 ## Thanks
 

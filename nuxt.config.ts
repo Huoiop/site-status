@@ -14,6 +14,22 @@ const envText = (key: string, fallback: string) =>
 // Unset defaults to true; only an explicit "true" enables links.
 const showLinkEnv = process.env.SHOW_LINKS ?? process.env.SHOW_LINK;
 
+const siteGithub =
+  process.env.SITE_GITHUB ?? "https://github.com/imsyy/site-status";
+
+// Derive the GitHub profile URL from a repository URL, e.g.
+// https://github.com/Huoiop/site-status -> https://github.com/Huoiop/
+const githubProfileUrl = (url: string) => {
+  try {
+    const { hostname, pathname } = new URL(url);
+    if (!["github.com", "www.github.com"].includes(hostname)) return "";
+    const [owner] = pathname.split("/").filter(Boolean);
+    return owner ? `https://github.com/${owner}/` : "";
+  } catch {
+    return "";
+  }
+};
+
 // site env
 const siteConfig = {
   siteTitle: envText("SITE_TITLE", "IMSYY 站点监测"),
@@ -22,11 +38,13 @@ const siteConfig = {
   siteLogo: process.env.SITE_LOGO || "/favicon.ico",
   siteIcp: envText("SITE_ICP", ""),
   // Footer / nav links. Leave a value empty to hide the related button.
-  siteGithub:
-    process.env.SITE_GITHUB ?? "https://github.com/imsyy/site-status",
+  siteGithub,
   siteHome: process.env.SITE_HOME ?? "https://www.imsyy.top",
   siteEmail: process.env.SITE_EMAIL ?? "one@imsyy.top",
   siteAuthor: envText("SITE_AUTHOR", ""),
+  // Defaults to the GitHub profile derived from SITE_GITHUB.
+  siteAuthorUrl:
+    process.env.SITE_AUTHOR_URL || githubProfileUrl(siteGithub),
   countDays: Number(process.env.COUNT_DAYS || 60),
   showLink:
     showLinkEnv === undefined ? true : showLinkEnv.toLowerCase() === "true",
